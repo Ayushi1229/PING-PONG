@@ -6,7 +6,24 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
 }
+
+#back-button {
+    position: fixed;
+    bottom: 10px; /* Position from the bottom of the screen */
+    left: 0; /* Position from the left edge of the screen */
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 10; /* Keeps it above other elements */
+}
+
+#back-button a img {
+    width: 40px; /* Adjusted size for responsiveness */
+    height: auto; /* Maintain aspect ratio */
+}
+
 .names {
     width: 100%;
     max-width: 1000px;
@@ -15,11 +32,12 @@ body {
     padding: 0 20px;
     box-sizing: border-box;
 }
+
 .names div {
     font-size: 1.5rem;
     color: black;
-
 }
+
 canvas {
     width: 100%;
     height: auto;
@@ -27,12 +45,14 @@ canvas {
     max-height: 600px;
     border: 2px solid black;
 }
+
 @media (min-width: 600px) {
     canvas {
         max-width: 100%;
         max-height: auto;
     }
 }
+
 @media (max-width: 600px) {
     canvas {
         max-width: 368px;
