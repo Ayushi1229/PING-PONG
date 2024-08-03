@@ -117,16 +117,14 @@ let can = document.getElementById("table");
         }
 
         function updates() {
-          
             ball.x += ball.velX;
             ball.y += ball.velY;
         
         
             if (ball.x - ball.radius <= 0) {
-              
                 cpu.score++;
                 console.log("CPU Score:", cpu.score); 
-                if(cpu.score >= 5){ 
+                if(cpu.score >= 10){ 
                     showLose();
                     clearInterval(looper);
                     return;  
@@ -134,10 +132,9 @@ let can = document.getElementById("table");
                     restart();
                 }
             } else if (ball.x + ball.radius >= can.width) {
-               
                 user.score++;
                 console.log("User Score:", user.score);
-                if(user.score >= 5){
+                if(user.score >= 10){
                     showWin();
                     clearInterval(looper);
                     return;
@@ -148,12 +145,9 @@ let can = document.getElementById("table");
         
             cpu_movement();
         
-          
             if (ball.y - ball.radius < 0 || ball.y + ball.radius > can.height) {
                 ball.velY = -ball.velY;
-            }
-        
-           
+            }           
             let player = (ball.x < can.width / 2) ? user : cpu;
         
             if (detect_collision(ball, player)) {
@@ -179,7 +173,7 @@ let can = document.getElementById("table");
         function showLose() {           
             Swal.fire({
                 title: "Game Over!",
-                text: "You lost! The CPU scored 5 point.",
+                text: "You lost! The CPU scored 10 point.",
                 icon: "error",
                 confirmButtonText: 'Reset!'
             }).then((result) => {
