@@ -13,6 +13,20 @@ body, html {
     text-align: center;
     color: white;
 }
+#back-button a img {
+    width: 50px; /* Adjust the size for responsiveness */
+    height: auto;
+}
+#back-button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 10; /* Ensure it stays above other elements */
+}
+
 .header {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 4.5rem;
