@@ -1,3 +1,9 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: gray;
     margin: 0;
@@ -20,8 +26,8 @@ body {
 }
 
 #back-button a img {
-    width: 40px; /* Adjusted size for responsiveness */
-    height: auto; /* Maintain aspect ratio */
+    width: 50px; 
+    height: auto; 
 }
 
 .names {
@@ -31,11 +37,13 @@ body {
     justify-content: space-between;
     padding: 0 20px;
     box-sizing: border-box;
+    font-family: monospace;
 }
 
 .names div {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: black;
+    margin-left: 70px;
 }
 
 canvas {
