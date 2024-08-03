@@ -65,7 +65,8 @@ let can = document.getElementById("table");
         function restart() {
             ball.x = can.width / 2;
             ball.y = can.height / 2;
-            ball.velX = -ball.velX;
+            ball.velX = (Math.random() > 0.5 ? 1 : -1) * ball.speed;
+            ball.velY = (Math.random() * 2 - 1) * ball.speed;
             ball.speed = 5;
         }
 
@@ -98,11 +99,12 @@ let can = document.getElementById("table");
         }
 
         function cpu_movement() {
-            if (cpu.y + cpu.height / 2 < ball.y) {
-                cpu.y += 5;
-            } else {
-                cpu.y -= 5;
-            }
+            let cpu_center = cpu.y + cpu.height / 2;
+            let difference = ball.y - cpu_center;
+            let move = difference * 0.1; 
+            cpu.y += move;
+        
+            cpu.y = Math.max(0, Math.min(can.height - cpu.height, cpu.y));
         }
 
         function helper() {
@@ -116,34 +118,54 @@ let can = document.getElementById("table");
         }
 
         function updates() {
-            if (ball.x - ball.radius < 0) {
-                cpu.score++;
-                restart();
-            } else if (ball.x + ball.radius > can.width) {
-                user.score++;
-                restart();
-            }
-
+          
             ball.x += ball.velX;
             ball.y += ball.velY;
-
+        
+        
+            if (ball.x - ball.radius <= 0) {
+              
+                cpu.score++;
+                console.log("CPU Score:", cpu.score); 
+                if(cpu.score >= 5){ 
+                    showLose();
+                    clearInterval(looper);
+                    return;  
+                } else {
+                    restart();
+                }
+            } else if (ball.x + ball.radius >= can.width) {
+               
+                user.score++;
+                console.log("User Score:", user.score);
+                if(user.score >= 5){
+                    showWin();
+                    clearInterval(looper);
+                    return;
+                } else {
+                    restart();
+                }
+            }
+        
             cpu_movement();
-
+        
+          
             if (ball.y - ball.radius < 0 || ball.y + ball.radius > can.height) {
                 ball.velY = -ball.velY;
             }
-
+        
+           
             let player = (ball.x < can.width / 2) ? user : cpu;
-
+        
             if (detect_collision(ball, player)) {
                 let collidePoint = ball.y - (player.y + player.height / 2);
                 collidePoint = collidePoint / (player.height / 2);
                 let angleRad = (Math.PI / 4) * collidePoint;
-
+        
                 let direction = (ball.x < can.width / 2) ? 1 : -1;
                 ball.velX = direction * ball.speed * Math.cos(angleRad);
                 ball.velY = ball.speed * Math.sin(angleRad);
-                ball.speed += 1.5; // Increment speed slightly to increase difficulty
+                ball.speed += 0.5; 
             }
         }
 
@@ -154,3 +176,32 @@ let can = document.getElementById("table");
 
         let n = 50;
         let looper = setInterval(call_back, 1000 / n);
+
+        function showLose() {           
+            Swal.fire({
+                title: "Game Over!",
+                text: "You lost! The CPU scored 5 point.",
+                icon: "error",
+                confirmButtonText: 'Reset!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    resetGame();
+                }
+            });
+        }
+        
+        function resetGame() {
+            user.score = 0;
+            cpu.score = 0;
+
+            ball.x = can.width / 2;
+            ball.y = can.height / 2;
+            ball.velX = 5;
+            ball.velY = 5;
+            ball.speed = 5;
+
+            user.y = (can.height - 100) / 2;
+            cpu.y = (can.height - 100) / 2;
+
+            looper = setInterval(call_back, 1000 / n);
+        }
