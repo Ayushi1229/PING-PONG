@@ -92,7 +92,6 @@ let can = document.getElementById("table");
             let rect = can.getBoundingClientRect();
             user.y = evt.clientY - rect.top - user.height / 2;
         }
-
         function getTouchPos(evt) {
             let rect = can.getBoundingClientRect();
             user.y = evt.touches[0].clientY - rect.top - user.height / 2;
